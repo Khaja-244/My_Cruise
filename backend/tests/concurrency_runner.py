@@ -1,4 +1,5 @@
-"""Real cross-channel inventory race test.
+"""
+Real cross-channel inventory race test.
 
 Requires a running API and an OPEN sailing/cabin.
 
@@ -79,6 +80,10 @@ async def main():
         # -------------------------------------------------
         # Direct traveler booking payload
         # -------------------------------------------------
+        #
+        # The backend requires passport_number for every
+        # guest. Keep one guest for occupancy=1.
+        # -------------------------------------------------
 
         direct_payload = {
             "sailing_id": SAILING_ID,
@@ -94,6 +99,7 @@ async def main():
                     "full_name": "Concurrency Test Customer",
                     "date_of_birth": "1990-01-01",
                     "nationality": "IN",
+                    "passport_number": "P1234567",
                     "is_lead_guest": True,
                 }
             ],
@@ -101,6 +107,10 @@ async def main():
 
         # -------------------------------------------------
         # Partner booking payload
+        # -------------------------------------------------
+        #
+        # The partner API also requires passport_number
+        # for every guest.
         # -------------------------------------------------
 
         partner_payload = {
@@ -120,6 +130,7 @@ async def main():
                     "full_name": PARTNER_CUSTOMER_NAME,
                     "date_of_birth": "1990-01-01",
                     "nationality": "IN",
+                    "passport_number": "P7654321",
                     "is_lead_guest": True,
                 }
             ],
@@ -194,10 +205,15 @@ async def main():
 
         assert actual == expected, (
             "Expected exactly one success (200) and "
-            f"one conflict (409), but got {statuses}. "
+            "one conflict (409), but got "
+            f"{statuses}. "
             f"Direct response: {direct_response.text}. "
             f"Partner response: {partner_response.text}"
         )
+
+        # -------------------------------------------------
+        # Test passed
+        # -------------------------------------------------
 
         print(
             "SUCCESS: Cross-channel inventory locking worked. "
