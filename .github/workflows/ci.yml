@@ -47,7 +47,7 @@ jobs:
           ADMIN_INITIAL_PASSWORD: Admin1234
         run: |
           cd backend
-          python tests/ci_setup_concurrency.py
+          python -m tests.ci_setup_concurrency
           while IFS='=' read -r key value; do
             echo "$key=$value" >> "$GITHUB_ENV"
           done < tests/ci-concurrency.env
