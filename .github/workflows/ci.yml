@@ -50,7 +50,7 @@ jobs:
           python -m tests.ci_setup_concurrency
           while IFS='=' read -r key value; do
             echo "$key=$value" >> "$GITHUB_ENV"
-          done < tests/ci-concurrency.env
+          done < ci-concurrency.env
       - name: Start API
         env:
           DATABASE_URL: postgresql+asyncpg://cruise:cruise@localhost:5432/my_cruise_test
