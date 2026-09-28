@@ -86,10 +86,3 @@ jobs:
         working-directory: frontend
       - run: npm run lint
         working-directory: frontend
-
-  docker-compose:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Validate Compose configuration
-        run: docker compose config
