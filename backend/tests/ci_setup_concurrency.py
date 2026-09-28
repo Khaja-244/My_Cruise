@@ -49,7 +49,7 @@ async def main() -> None:
             session.add(traveler)
             await session.flush()
 
-        partner = await session.scalar(select(Partner).where(Partner.email == "partner1@example.com"))
+        partner = await session.scalar(select(Partner).where(Partner.email == "partner123@mycruise.demo"))
         if not partner or not partner.user_id or partner.status != PartnerStatus.active:
             raise RuntimeError("Seed partner1@example.com is not active/configured.")
 
