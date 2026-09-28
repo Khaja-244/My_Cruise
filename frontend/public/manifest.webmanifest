@@ -1,0 +1,10 @@
+{
+  "name": "my_cruise",
+  "short_name": "my_cruise",
+  "description": "Discover sailings, choose your cabin and book securely.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#071521",
+  "theme_color": "#0b1d2a",
+  "icons": [{ "src": "/ship-logo.svg", "sizes": "64x64", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

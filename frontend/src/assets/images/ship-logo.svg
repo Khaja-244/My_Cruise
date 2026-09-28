@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">my_cruise ship logo</title>
+  <desc id="desc">Minimal cruise ship sailing on waves</desc>
+  <rect width="64" height="64" rx="16" fill="#0b1d2a"/>
+  <path d="M17 37.5h30l-4.7 8.2H21.7L17 37.5Z" fill="#fff"/>
+  <path d="M24 27h16l3 9H21l3-9Z" fill="#dff8f4"/>
+  <path d="M28 21h9v6h-9z" fill="#fff"/>
+  <path d="M16 48c4 3 8 3 12 0 4 3 8 3 12 0 3 2 6 2 9 0" fill="none" stroke="#20b9aa" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M26 25h12" stroke="#0b8277" stroke-width="2" stroke-linecap="round"/>
+</svg>

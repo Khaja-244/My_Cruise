@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: cruise
+          POSTGRES_PASSWORD: cruise
+          POSTGRES_DB: my_cruise_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U cruise -d my_cruise_test"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r backend/requirements.txt
+      - name: Compile backend
+        run: python -m compileall -q backend
+      - name: Run backend tests
+        env:
+          DATABASE_URL: postgresql+asyncpg://cruise:cruise@localhost:5432/my_cruise_test
+          JWT_SECRET_KEY: ci-test-secret
+          REDIS_URL: ""
+          ADMIN_EMAIL: admin@mycruise.com
+          ADMIN_INITIAL_PASSWORD: Admin1234
+        run: |
+          cd backend
+          alembic upgrade head
+          python seeds/seed.py
+          pytest tests -q
+      - name: Prepare cross-channel concurrency fixture
+        env:
+          DATABASE_URL: postgresql+asyncpg://cruise:cruise@localhost:5432/my_cruise_test
+          JWT_SECRET_KEY: ci-test-secret
+          REDIS_URL: ""
+          ADMIN_EMAIL: admin@mycruise.com
+          ADMIN_INITIAL_PASSWORD: Admin1234
+        run: |
+          cd backend
+          python tests/ci_setup_concurrency.py
+          while IFS='=' read -r key value; do
+            echo "$key=$value" >> "$GITHUB_ENV"
+          done < tests/ci-concurrency.env
+      - name: Start API
+        env:
+          DATABASE_URL: postgresql+asyncpg://cruise:cruise@localhost:5432/my_cruise_test
+          JWT_SECRET_KEY: ci-test-secret
+          REDIS_URL: ""
+          ADMIN_EMAIL: admin@mycruise.com
+          ADMIN_INITIAL_PASSWORD: Admin1234
+        run: |
+          nohup uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 > /tmp/my-cruise-api.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8000/health >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/my-cruise-api.log
+          exit 1
+      - name: Run real cross-channel concurrency test
+        env:
+          BASE_URL: http://127.0.0.1:8000/api
+        run: python backend/tests/concurrency_runner.py
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+      - run: npm run lint
+        working-directory: frontend
+
+  docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose configuration
+        run: docker compose config

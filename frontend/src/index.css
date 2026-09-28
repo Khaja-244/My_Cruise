@@ -1,0 +1,1114 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Manrope', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #ffffff;
+  background: #000000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --mc-black: #000000;
+  --mc-phantom: #1e1e24;
+  --mc-arsenic: #40424d;
+  --mc-graphite: #6e7180;
+  --mc-space: #9da2b3;
+  --mc-purple: #a343ff;
+  --mc-purple-dark: #7d2bd6;
+  --mc-salmon: #ff6767;
+  --mc-surface: #121217;
+  --mc-border: rgba(157, 162, 179, 0.24);
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: radial-gradient(circle at 10% 0%, rgba(163,67,255,.10), transparent 28%), radial-gradient(circle at 90% 10%, rgba(255,103,103,.08), transparent 24%), var(--mc-black); color: #ffffff; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+img { max-width: 100%; }
+
+a { transition: color .18s ease, opacity .18s ease; }
+
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.font-extrabold,
+.font-bold {
+  font-family: 'Space Grotesk', 'Manrope', sans-serif;
+}
+
+@layer components {
+  .page-shell { min-height: calc(100vh - 72px); }
+  .container-app { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
+
+  .card {
+    border: 1px solid var(--mc-border);
+    border-radius: 20px;
+    background: var(--mc-phantom);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .28);
+  }
+
+  .card-hover { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .38);
+    border-color: rgba(163, 67, 255, .5);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    border-radius: 10px;
+    padding: .58rem .9rem;
+    font-weight: 700;
+    font-size: .88rem;
+    line-height: 1.15;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+    min-height: 38px;
+  }
+
+  .btn:focus-visible, .input:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 3px solid rgba(255, 103, 103, .35);
+    outline-offset: 2px;
+  }
+
+  /* Primary actions stay quiet by default. The reference uses colour as an accent,
+     not as a large glowing fill. The mixed gradient appears on hover/focus. */
+  .btn-primary {
+    color: #eadcff;
+    border: 1px solid rgba(163, 67, 255, .42);
+    background: rgba(163, 67, 255, .08);
+    box-shadow: none;
+  }
+
+  .btn-primary:hover:not(:disabled),
+  .btn-primary:focus-visible:not(:disabled) {
+    transform: translateY(-1px);
+    color: #ffffff;
+    border-color: transparent;
+    background:
+      linear-gradient(#24212a, #24212a) padding-box,
+      linear-gradient(135deg, rgba(163,67,255,.90), rgba(255,103,103,.82)) border-box;
+    box-shadow: 0 8px 24px rgba(163, 67, 255, .12);
+  }
+
+  .btn-secondary { background: #24242b; color: #e8e8ee; border: 1px solid var(--mc-border); }
+  .btn-secondary:hover:not(:disabled) { background: #2a2a32; border-color: rgba(163,67,255,.35); transform: translateY(-1px); }
+
+  .btn-outline {
+    border: 1px solid var(--mc-border);
+    background: rgba(255,255,255,.03);
+    color: #ffffff;
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    border-color: rgba(163, 67, 255, .65);
+    background: rgba(163, 67, 255, .08);
+  }
+
+  .input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--mc-border);
+    background: #18181e;
+    border-radius: 12px;
+    padding: .78rem .9rem;
+    color: #ffffff;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+  }
+
+  .input::placeholder { color: var(--mc-space); }
+  .input:focus {
+    outline: none;
+    border-color: var(--mc-purple);
+    box-shadow: 0 0 0 4px rgba(163, 67, 255, .14);
+    background: #202027;
+  }
+
+  .eyebrow {
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--mc-salmon);
+  }
+
+  .section-title {
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: #ffffff;
+  }
+
+  .muted { color: var(--mc-space); }
+
+  .glass {
+    background: rgba(30, 30, 36, .88);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--mc-phantom);
+    color: white;
+    font-weight: 900;
+    box-shadow: 0 8px 25px rgba(0,0,0,.28);
+  }
+
+  .brand-mark-sm { width: 36px; height: 36px; border-radius: 10px; }
+
+  .icon-button {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid var(--mc-border);
+    background: var(--mc-phantom);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+  }
+
+  .notification-dot {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--mc-salmon);
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    padding: .75rem .85rem;
+    font-size: .95rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .mobile-nav-link:hover { background: rgba(163,67,255,.10); color: #ffffff; }
+  .footer-link { display: block; transition: color .15s; }
+  .footer-link:hover { color: var(--mc-salmon); }
+
+  .skip-link {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 100;
+    transform: translateY(-150%);
+    background: var(--mc-purple);
+    color: white;
+    padding: .65rem .9rem;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .skip-link:focus { transform: translateY(0); }
+}
+
+* { scrollbar-width: thin; scrollbar-color: var(--mc-graphite) var(--mc-black); }
+
+@media (max-width: 640px) {
+  .container-app { width: min(100% - 24px, 1180px); }
+}
+
+@layer components {
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: .3rem .65rem;
+    font-size: .68rem;
+    line-height: 1;
+    font-weight: 800;
+    text-transform: capitalize;
+    border: 1px solid transparent;
+  }
+
+  .status-good, .status-available { background: rgba(163,67,255,.12); color: #d8b7ff; border-color: rgba(163,67,255,.35); }
+  .status-warn, .status-held { background: rgba(255,103,103,.10); color: #ffb2b2; border-color: rgba(255,103,103,.35); }
+  .status-bad, .status-booked { background: rgba(255,103,103,.16); color: #ff9b9b; border-color: rgba(255,103,103,.42); }
+  .status-blocked { background: rgba(157,162,179,.12); color: #c8cad3; border-color: rgba(157,162,179,.30); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--mc-border);
+    background: rgba(255,255,255,.035);
+    border-radius: 999px;
+    padding: .42rem .7rem;
+    font-size: .72rem;
+    font-weight: 700;
+    color: #cfd1d9;
+  }
+
+  .tag-active { background: rgba(163,67,255,.12); border-color: rgba(163,67,255,.35); color: #d8b7ff; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@layer components {
+  .brand-logo {
+    width: 70px;
+    height: 50px;
+    flex: 0 0 auto;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .brand-logo-sm { width: 58px; height: 44px; border-radius: 0; }
+  .hero-photo { object-position: center 48%; filter: saturate(1.08) contrast(1.04); }
+
+  .premium-panel {
+    border: 1px solid rgba(255,255,255,.14);
+    background: linear-gradient(145deg, rgba(163,67,255,.16), rgba(255,103,103,.08));
+    box-shadow: 0 24px 70px rgba(0,0,0,.40);
+    backdrop-filter: blur(12px);
+  }
+
+  .section-band {
+    background: linear-gradient(180deg, #0d0d12 0%, #15151b 100%);
+    border-top: 1px solid var(--mc-border);
+    border-bottom: 1px solid var(--mc-border);
+  }
+
+  .cabin-card {
+    border: 1px solid var(--mc-border);
+    border-radius: 16px;
+    background: var(--mc-phantom);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .cabin-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(163,67,255,.55);
+    box-shadow: 0 14px 34px rgba(0,0,0,.30);
+  }
+
+  .cabin-card.selected {
+    border-color: var(--mc-salmon);
+    box-shadow: 0 0 0 3px rgba(255,103,103,.14), 0 12px 28px rgba(0,0,0,.30);
+  }
+
+  .cabin-card.disabled { opacity: .62; background: #15151a; cursor: not-allowed; }
+  .table-action { color: #d8b7ff; font-weight: 800; font-size: .78rem; }
+  .table-action:hover { color: var(--mc-salmon); text-decoration: underline; }
+}
+
+/* ------------------------------------------------------------
+   My Cruise visual theme
+   The following overrides keep the existing JSX and business
+   logic intact while applying the supplied purple/salmon design.
+   ------------------------------------------------------------ */
+.bg-white { background-color: var(--mc-phantom) !important; }
+.bg-slate-50 { background-color: #0d0d12 !important; }
+.bg-slate-100 { background-color: #15151a !important; }
+.bg-slate-200 { background-color: #25252d !important; }
+.bg-slate-900 { background-color: #0a0a0e !important; }
+
+.text-navy-900, .text-navy-800 { color: #f8f8fb !important; }
+.text-slate-800 { color: #f2f2f6 !important; }
+.text-slate-700 { color: #e2e3e9 !important; }
+.text-slate-600 { color: #c4c7d1 !important; }
+.text-slate-500, .text-slate-400 { color: var(--mc-space) !important; }
+.text-slate-300, .text-slate-200 { color: #c4c7d1 !important; }
+.text-slate-100 { color: #ececf0 !important; }
+.text-brand-600, .text-brand-700 { color: var(--mc-purple) !important; }
+.text-brand-100 { color: #ffd2d2 !important; }
+.text-red-600, .text-red-700 { color: #ff9b9b !important; }
+.text-emerald-700 { color: #86e3b6 !important; }
+.text-amber-700, .text-amber-800, .text-amber-900 { color: #ffd08a !important; }
+.text-orange-700 { color: #ffb49e !important; }
+.text-teal-700 { color: #7de0d2 !important; }
+.text-blue-700 { color: #9ebdff !important; }
+
+.border-slate-100, .border-slate-200, .border-slate-300, .border-slate-200\/80 {
+  border-color: var(--mc-border) !important;
+}
+.border-brand-100, .border-brand-200, .border-brand-300, .border-brand-600 { border-color: rgba(163,67,255,.45) !important; }
+.border-red-100 { border-color: rgba(255,103,103,.32) !important; }
+.border-amber-200 { border-color: rgba(255,190,92,.32) !important; }
+.border-emerald-100 { border-color: rgba(77,201,154,.30) !important; }
+.border-orange-300, .border-orange-500 { border-color: rgba(255,103,103,.45) !important; }
+.border-teal-300, .border-teal-600 { border-color: rgba(125,224,210,.45) !important; }
+.border-blue-300, .border-blue-600 { border-color: rgba(158,189,255,.45) !important; }
+.border-navy-900 { border-color: var(--mc-arsenic) !important; }
+
+.bg-brand-50, .bg-brand-50\/40 { background-color: rgba(163,67,255,.10) !important; }
+.bg-brand-600 { background: linear-gradient(135deg, var(--mc-purple), var(--mc-salmon)) !important; }
+.bg-navy-950, .bg-navy-900, .bg-navy-800 { background-color: var(--mc-phantom) !important; }
+.bg-red-50 { background-color: rgba(255,103,103,.10) !important; }
+.bg-amber-50, .bg-orange-50 { background-color: rgba(255,190,92,.08) !important; }
+.bg-emerald-50 { background-color: rgba(77,201,154,.08) !important; }
+.bg-teal-50 { background-color: rgba(125,224,210,.08) !important; }
+.bg-blue-50 { background-color: rgba(158,189,255,.08) !important; }
+.bg-teal-600 { background: #159f91 !important; }
+.bg-blue-600 { background: #5579d6 !important; }
+.bg-orange-500 { background: #d88932 !important; }
+
+.hover\:bg-slate-50:hover { background-color: rgba(163,67,255,.08) !important; }
+.hover\:bg-brand-50:hover { background-color: rgba(163,67,255,.10) !important; }
+.hover\:bg-red-50:hover { background-color: rgba(255,103,103,.10) !important; }
+.hover\:text-navy-900:hover { color: #ffffff !important; }
+.hover\:text-red-600:hover { color: var(--mc-salmon) !important; }
+.hover\:border-brand-300:hover { border-color: rgba(163,67,255,.55) !important; }
+
+.bg-white\/90 { background-color: rgba(30,30,36,.90) !important; }
+.bg-white\/10 { background-color: rgba(255,255,255,.08) !important; }
+.text-white\/70 { color: rgba(255,255,255,.70) !important; }
+.text-white\/60 { color: rgba(255,255,255,.60) !important; }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #202027 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+select option { background: var(--mc-phantom); color: #ffffff; }
+
+
+/* Shared controls and data surfaces: keep every page consistent, including
+   admin/partner forms that use utility classes instead of .input. */
+label { color: #e2e3e9; }
+
+input:not([type="checkbox"]):not([type="radio"]):not(.input),
+select:not(.input),
+textarea:not(.input) {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--mc-border);
+  background: #18181e;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: .75rem .85rem;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not(.input)::placeholder,
+textarea:not(.input)::placeholder { color: var(--mc-space); }
+
+input:not([type="checkbox"]):not([type="radio"]):not(.input):focus,
+select:not(.input):focus,
+textarea:not(.input):focus {
+  outline: none;
+  border-color: var(--mc-purple);
+  box-shadow: 0 0 0 4px rgba(163,67,255,.14);
+  background: #202027;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--mc-purple);
+}
+
+select { color-scheme: dark; }
+
+.table-wrap table tbody tr,
+table tbody tr { transition: background .16s ease; }
+
+table tbody tr:hover { background: rgba(163,67,255,.055); }
+
+thead th {
+  font-family: 'Manrope', sans-serif;
+  font-size: .70rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--mc-space);
+}
+
+hr { border-color: var(--mc-border); }
+
+::selection { background: rgba(163,67,255,.55); color: #ffffff; }
+
+/* Make common tables and dashboard panels match the dark reference. */
+table { color: #ffffff; }
+thead { background: #15151a; }
+tbody tr { border-color: var(--mc-border) !important; }
+
+/* Keep the provided real cruise imagery visually strong on dark surfaces. */
+.hero-photo, .object-cover { background: #101015; }
+
+/* Responsive spacing for dense admin/partner pages. */
+@media (max-width: 768px) {
+  .card { border-radius: 16px; }
+  .section-title { letter-spacing: -.02em; }
+}
+
+.btn.bg-white { background: rgba(163,67,255,.08) !important; color: #eadcff !important; border: 1px solid rgba(163,67,255,.42); }
+
+/* Premium mixed-colour treatment requested for the reference design. */
+.page-heading,
+.section-title,
+.page-shell h1,
+.page-shell h2.section-title,
+.page-shell h2:not(.text-white) {
+  background: linear-gradient(110deg, #ffffff 0%, #d8b7ff 38%, #ff8a8a 72%, #ffd2d2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+
+.page-heading { text-shadow: 0 10px 40px rgba(163, 67, 255, .16); }
+
+/* Every important content image gets a subtle purple → salmon frame. */
+.premium-image-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 1px;
+  background: #202027;
+  box-shadow: none;
+}
+
+.premium-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+/* Keep cards quiet by default, like the reference. The purple → salmon frame
+   appears only when the user hovers a card. */
+.card {
+  border: 1px solid rgba(157, 162, 179, .18);
+  background: var(--mc-phantom);
+}
+
+.card-hover:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--mc-phantom), var(--mc-phantom)) padding-box,
+    linear-gradient(135deg, rgba(163, 67, 255, .92), rgba(255, 103, 103, .88)) border-box;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .42), 0 0 30px rgba(163, 67, 255, .10);
+}
+
+.cruise-card {
+  border: 1px solid rgba(157, 162, 179, .22);
+  background: #1e1e24;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.cruise-card:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(#1e1e24, #1e1e24) padding-box,
+    linear-gradient(135deg, #a343ff, #ff6767) border-box;
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .44), 0 0 34px rgba(163, 67, 255, .12);
+}
+
+/* Image frames stay neutral until their containing card is hovered. */
+.premium-image-frame {
+  border: 1px solid rgba(157, 162, 179, .22);
+  padding: 1px;
+  background: #202027;
+  box-shadow: none;
+}
+
+.cruise-card:hover .premium-image-frame {
+  border-color: transparent;
+  background: linear-gradient(135deg, #a343ff, #ff6767);
+  box-shadow: 0 0 28px rgba(163,67,255,.12);
+}
+
+.premium-image-frame:hover {
+  border-color: transparent;
+  background: linear-gradient(135deg, #a343ff, #ff6767);
+  box-shadow: 0 0 28px rgba(163,67,255,.12);
+}
+
+/* Restore meaningful status colours while keeping the reference palette. */
+.status-good,
+.status-available { background: rgba(77, 201, 154, .12); color: #9ce7c6; border-color: rgba(77, 201, 154, .35); }
+.status-warn,
+.status-held { background: rgba(255, 190, 92, .12); color: #ffd08a; border-color: rgba(255, 190, 92, .35); }
+.status-bad,
+.status-booked { background: rgba(255, 103, 103, .14); color: #ff9b9b; border-color: rgba(255, 103, 103, .42); }
+.status-blocked { background: rgba(157, 162, 179, .12); color: #c8cad3; border-color: rgba(157, 162, 179, .30); }
+
+/* Reusable media treatment for existing pages without changing their data. */
+.cruise-media,
+.hero-photo {
+  filter: saturate(1.08) contrast(1.04);
+}
+
+
+/* Clear, dark deck-plan treatment. Cabin type colours are intentionally
+   limited to thin outlines so the room number remains the easiest thing to read. */
+.deck-plan-shell {
+  border: 1px solid rgba(157, 162, 179, .18);
+  background: #111116;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 18px 45px rgba(0,0,0,.30);
+}
+
+.deck-hull {
+  border: 1px solid rgba(157, 162, 179, .26);
+  background: radial-gradient(circle at 50% 15%, rgba(163,67,255,.08), transparent 36%), #1a1a20;
+}
+
+
+.deck-tab-active {
+  border-color: rgba(163,67,255,.62);
+  background: rgba(163,67,255,.10);
+  box-shadow: 0 0 18px rgba(163,67,255,.08);
+}
+
+.cabin-room {
+  min-height: 54px;
+  border: 1px solid rgba(157, 162, 179, .24);
+  background: #1b1b21;
+  color: #f4f4f7;
+  box-shadow: none;
+}
+
+/* Keep the normal deck quiet. Colour appears only on interaction or selection. */
+.cabin-room:hover:not(:disabled) {
+  border-color: rgba(163,67,255,.58);
+  background: #211e27;
+  box-shadow: 0 8px 20px rgba(163,67,255,.08);
+}
+
+/* Selected cabins use a thin mixed-colour frame instead of a full bright fill. */
+.cabin-room.selected {
+  border-color: rgba(163,67,255,.70);
+  background: #24212a;
+  color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255,103,103,.24), 0 8px 22px rgba(163,67,255,.08);
+}
+
+.cabin-room.booked {
+  border-color: rgba(157,162,179,.14);
+  background: #15151a;
+  color: #7d808d;
+  box-shadow: none;
+}
+
+/* Cabin type colours are only small state accents, not large colour blocks. */
+.cabin-type-suite { border-color: rgba(255,103,103,.30); }
+.cabin-type-balcony { border-color: rgba(125,224,210,.30); }
+.cabin-type-ocean { border-color: rgba(158,189,255,.30); }
+.cabin-type-interior { border-color: rgba(157,162,179,.24); }
+
+.cabin-state-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 17px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(157,162,179,.24);
+  font-size: 8px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.cabin-state-available {
+  color: #9ce7c6;
+  border-color: rgba(77,201,154,.42);
+  background: rgba(77,201,154,.06);
+}
+
+.cabin-state-selected {
+  color: #f4dfff;
+  border-color: rgba(163,67,255,.46);
+  background: rgba(163,67,255,.06);
+}
+
+.cabin-state-unavailable {
+  color: #8d909b;
+  border-color: rgba(157,162,179,.18);
+  background: rgba(157,162,179,.04);
+}
+
+.cabin-legend-dot { width: 28px; height: 4px; border-radius: 999px; }
+
+@media (max-width: 900px) {
+  .cabin-room { min-height: 52px; }
+}
+
+
+@media (max-width: 640px) {
+  .premium-image-frame { border-radius: 16px; }
+  .premium-image { border-radius: 14px; }
+}
+
+
+
+/* Vertical cruise cards match the supplied reference: tall image-led cards with
+   quiet borders at rest and the purple/salmon accent only on hover. */
+.featured-cruise-grid,
+.cruise-list-grid { align-items: stretch; }
+
+.featured-cruise-card,
+.cruise-list-grid .cruise-card {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cruise-card-media {
+  height: 250px;
+  min-height: 250px;
+  flex: 0 0 250px;
+  position: relative;
+}
+
+.cruise-card-body { min-height: 210px; }
+
+@media (max-width: 900px) {
+  .featured-cruise-card,
+  .cruise-list-grid .cruise-card { min-height: 470px; }
+  .cruise-card-media { height: 230px; min-height: 230px; flex-basis: 230px; }
+}
+
+@media (max-width: 640px) {
+  .brand-logo { width: 62px; height: 46px; }
+  .featured-cruise-card,
+  .cruise-list-grid .cruise-card { min-height: 440px; }
+  .cruise-card-media { height: 220px; min-height: 220px; flex-basis: 220px; }
+}
+
+/* Final visual polish: more breathing room and quieter actions. */
+.landing-section { scroll-margin-top: 88px; }
+.landing-feature-grid { row-gap: 18px; }
+.landing-feature-card { min-height: 190px; }
+
+/* Keep small action buttons compact even when older pages add larger utility padding. */
+.cabin-select-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  min-height: 30px;
+  padding: 5px 10px !important;
+  margin-top: 6px;
+  border-radius: 999px !important;
+  border: 1px solid rgba(163,67,255,.38);
+  background: rgba(163,67,255,.06) !important;
+  color: #d9b9ff !important;
+  box-shadow: none !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+}
+.cabin-select-link:hover {
+  border-color: rgba(255,103,103,.55);
+  background: rgba(255,103,103,.06) !important;
+  color: #ffd1d1 !important;
+}
+
+/* The large checkout CTA is intentionally restrained so it does not dominate the cabin map. */
+.cabin-continue-button {
+  min-height: 42px !important;
+  background: #24242b !important;
+  border: 1px solid rgba(163,67,255,.36) !important;
+  color: #eadcff !important;
+  box-shadow: none !important;
+}
+.cabin-continue-button:hover:not(:disabled) {
+  background: rgba(163,67,255,.09) !important;
+  border-color: rgba(255,103,103,.46) !important;
+}
+
+/* Avoid oversized hero copy and keep the hero-to-content transition visible. */
+.landing-hero-title {
+  max-width: 760px;
+  font-size: clamp(2.7rem, 5.6vw, 4.6rem) !important;
+  line-height: .98 !important;
+}
+.landing-hero { min-height: 620px; }
+
+@media (max-width: 900px) {
+  .landing-hero { min-height: 560px; }
+  .landing-hero-title { font-size: clamp(2.35rem, 9vw, 4rem) !important; }
+}
+
+
+/* Landing page polish based on the supplied cruise reference. */
+.heading-gradient {
+  background: linear-gradient(100deg, #a343ff 0%, #d36de8 48%, #ff8b8b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.landing-hero {
+  min-height: 640px;
+  background: #071221;
+}
+
+.landing-hero-title {
+  max-width: 700px;
+  font-size: clamp(2.8rem, 5vw, 4.7rem) !important;
+  line-height: .96 !important;
+}
+
+.landing-search-panel {
+  max-width: 720px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.28);
+}
+
+.landing-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  border-right: 1px solid rgba(255,255,255,.10);
+}
+.landing-search-field:last-child { border-right: 0; }
+.landing-search-field span { color: #9da2b3; font-size: .68rem; font-weight: 700; }
+.landing-search-field input,
+.landing-search-field select {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: .86rem;
+  font-weight: 700;
+}
+.landing-search-field select option { background: #1e1e24; color: #fff; }
+.landing-search-field input::placeholder { color: #e3e5ec; opacity: .8; }
+.landing-search-button { min-width: 140px; margin-left: auto; }
+
+.landing-stats span { color: #c8cad3; }
+.landing-stats strong { color: #c58cff; margin-right: 5px; }
+.landing-hero-side { box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+
+.featured-cruise-card { min-height: 390px; }
+.featured-cruise-card .cruise-card-media { height: 170px; min-height: 170px; flex-basis: 170px; }
+.featured-cruise-card .cruise-card-body { min-height: 135px; }
+
+.cruise-intro {
+  background: linear-gradient(135deg, rgba(30,30,36,.98), rgba(20,20,27,.98));
+}
+
+.cruise-info-mini {
+  min-height: 92px;
+  padding: 14px;
+  border: 1px solid rgba(157,162,179,.16);
+  border-radius: 14px;
+  background: rgba(255,255,255,.025);
+}
+.cruise-info-mini strong { display:block; font-size:.82rem; color:#f3f3f6; }
+.cruise-info-mini span { display:block; margin-top:6px; color:#9da2b3; font-size:.68rem; line-height:1.35; }
+
+@media (max-width: 900px) {
+  .landing-hero { min-height: 590px; }
+  .landing-search-field { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .landing-search-field:last-child { border-bottom: 0; }
+  .featured-cruise-card { min-height: 420px; }
+  .featured-cruise-card .cruise-card-media { height: 220px; min-height: 220px; flex-basis: 220px; }
+}
+
+@media (max-width: 640px) {
+  .landing-hero { min-height: 700px; }
+  .landing-hero-title { font-size: clamp(2.45rem, 12vw, 3.8rem) !important; }
+  .cruise-info-mini { min-height: 80px; padding: 11px; }
+}
+
+/* Most booked cruises: match the compact 3-card reference layout. */
+.featured-cruise-grid { align-items: stretch; }
+.featured-cruise-card {
+  min-height: 0 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  background: #1b1b21 !important;
+  box-shadow: 0 16px 38px rgba(0,0,0,.24);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.featured-cruise-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,103,103,.62) !important;
+  box-shadow: 0 20px 44px rgba(0,0,0,.34);
+}
+.featured-cruise-media {
+  height: 170px;
+  min-height: 170px;
+  background: #111116;
+}
+.featured-cruise-media img { transition: transform .35s ease; }
+.featured-cruise-card:hover .featured-cruise-media img { transform: scale(1.035); }
+.featured-cruise-content { min-height: 174px; }
+.featured-cruise-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.featured-cruise-meta { min-height: 17px; }
+.featured-cruise-action { width: fit-content; }
+.featured-see-all { min-width: 84px; text-align: center; }
+
+@media (max-width: 640px) {
+  .featured-cruise-media { height: 190px; min-height: 190px; }
+  .featured-cruise-content { min-height: 168px; }
+}
+
+/* ------------------------------------------------------------
+   Final consistency pass
+   - Compact all cruise listing cards so there is no unexplained empty space.
+   - Fix dark table hover states that could appear as bright grey rows.
+   - Add a small persistent day/dark mode control.
+   ------------------------------------------------------------ */
+.cruise-list-grid .cruise-card {
+  min-height: 0 !important;
+  height: auto;
+  background: #1b1b21 !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 34px rgba(0,0,0,.22);
+}
+.cruise-list-grid .cruise-card:hover {
+  border-color: rgba(163,67,255,.55) !important;
+  box-shadow: 0 18px 42px rgba(0,0,0,.30);
+  transform: translateY(-3px);
+}
+.cruise-list-grid .cruise-card .cruise-card-media {
+  height: 210px;
+  min-height: 210px;
+  flex: 0 0 210px;
+}
+.cruise-list-grid .cruise-card > div:last-child {
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+.cruise-list-grid .cruise-card .text-xl {
+  font-size: 1.25rem;
+}
+
+/* Never use the light grey hover utility on dark tables. */
+.hover\:bg-slate-50\/70:hover,
+tr.hover\:bg-slate-50\/70:hover {
+  background: rgba(163,67,255,.055) !important;
+}
+
+.table-wrap,
+.overflow-x-auto {
+  scrollbar-color: var(--mc-graphite) var(--mc-phantom);
+}
+
+table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.012);
+}
+table tbody tr:hover {
+  background: rgba(163,67,255,.055) !important;
+}
+
+thead th {
+  background: #111116;
+}
+
+.theme-toggle {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 80;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(163,67,255,.42);
+  background: rgba(30,30,36,.94);
+  color: #e6d4ff;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.30);
+  backdrop-filter: blur(12px);
+}
+.theme-toggle:hover {
+  border-color: rgba(255,103,103,.65);
+  color: #ffd0d0;
+}
+
+/* -------------------------------------------------------------------------
+   Semantic theme tokens
+   -------------------------------------------------------------------------
+   Components use these tokens instead of choosing a light/dark text colour
+   themselves. Only the values change when the user switches theme.
+*/
+:root,
+html[data-theme="dark"] {
+  --color-bg: #09090d;
+  --color-surface: #15151c;
+  --color-surface-muted: #1e1e26;
+  --color-surface-subtle: #292932;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e5e6ed;
+  --color-text-muted: #a5a8b7;
+  --color-text-inverse: #ffffff;
+  --color-text-inverse-muted: #dbe4f1;
+  --color-border: rgba(157, 162, 179, .24);
+  --color-accent: #a343ff;
+  --color-accent-soft: rgba(163, 67, 255, .10);
+  --color-success: #45c995;
+  --color-success-soft: rgba(69, 201, 149, .12);
+  --color-warning: #f0b85c;
+  --color-warning-soft: rgba(240, 184, 92, .14);
+  --color-error: #ff7777;
+  --color-error-soft: rgba(255, 103, 103, .12);
+  --color-error-strong: #d84f5b;
+  --color-overlay: rgba(0, 0, 0, .72);
+}
+
+html[data-theme="light"] {
+  --color-bg: #f5f4f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f0eef3;
+  --color-surface-subtle: #e6e3eb;
+  --color-text-primary: #211c28;
+  --color-text-secondary: #514c59;
+  --color-text-muted: #6d6877;
+  --color-text-inverse: #ffffff;
+  --color-text-inverse-muted: #dbe4f1;
+  --color-border: rgba(39, 35, 52, .14);
+  --color-accent: #7d2bd6;
+  --color-accent-soft: rgba(125, 43, 214, .08);
+  --color-success: #167a58;
+  --color-success-soft: rgba(69, 201, 149, .10);
+  --color-warning: #8a5b00;
+  --color-warning-soft: rgba(255, 190, 92, .14);
+  --color-error: #a63f48;
+  --color-error-soft: rgba(255, 103, 103, .12);
+  --color-error-strong: #b43f4b;
+  --color-overlay: rgba(18, 14, 25, .72);
+}
+
+html, body { background: var(--color-bg); color: var(--color-text-primary); }
+body {
+  background: radial-gradient(circle at 10% 0%, var(--color-accent-soft), transparent 28%),
+              radial-gradient(circle at 90% 10%, rgba(255,103,103,.06), transparent 24%),
+              var(--color-bg);
+}
+
+@layer utilities {
+  .bg-app { background-color: var(--color-bg) !important; }
+  .bg-surface { background-color: var(--color-surface) !important; }
+  .bg-surface-muted { background-color: var(--color-surface-muted) !important; }
+  .bg-surface-subtle { background-color: var(--color-surface-subtle) !important; }
+  .bg-accent-soft { background-color: var(--color-accent-soft) !important; }
+  .bg-success-soft { background-color: var(--color-success-soft) !important; }
+  .bg-warning-soft { background-color: var(--color-warning-soft) !important; }
+  .bg-error-soft { background-color: var(--color-error-soft) !important; }
+  .bg-error { background-color: var(--color-error) !important; }
+  .bg-error-strong { background-color: var(--color-error-strong) !important; }
+  .text-primary { color: var(--color-text-primary) !important; }
+  .text-secondary { color: var(--color-text-secondary) !important; }
+  .text-muted { color: var(--color-text-muted) !important; }
+  .text-inverse { color: var(--color-text-inverse) !important; }
+  .text-inverse-muted { color: var(--color-text-inverse-muted) !important; }
+  .text-accent { color: var(--color-accent) !important; }
+  .text-success { color: var(--color-success) !important; }
+  .text-warning { color: var(--color-warning) !important; }
+  .text-error { color: var(--color-error) !important; }
+  .border-default { border-color: var(--color-border) !important; }
+  .border-accent { border-color: var(--color-accent) !important; }
+  .border-success { border-color: var(--color-success) !important; }
+  .border-warning { border-color: var(--color-warning) !important; }
+  .border-error { border-color: var(--color-error) !important; }
+}
+
+/* Shared components also consume the tokens, so new pages inherit the theme
+   automatically instead of needing page-specific light-mode overrides. */
+.card { background: var(--color-surface); border-color: var(--color-border); }
+.input {
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+.input:focus { background: var(--color-surface); }
+.input::placeholder { color: var(--color-text-muted); }
+.muted { color: var(--color-text-muted); }
+.section-title, .page-heading { color: var(--color-text-primary); }
+.btn-outline { color: var(--color-text-primary); background: var(--color-surface); border-color: var(--color-border); }
+.btn-secondary { color: var(--color-text-primary); background: var(--color-surface-muted); border-color: var(--color-border); }
+.icon-button { color: var(--color-text-primary); background: var(--color-surface); border-color: var(--color-border); }
+.tag { color: var(--color-text-secondary); border-color: var(--color-border); background: color-mix(in srgb, var(--color-surface) 92%, transparent); }
+table { color: var(--color-text-primary); }
+thead th { background: var(--color-surface-muted); color: var(--color-text-secondary); }
+table tbody tr:nth-child(even) { background: color-mix(in srgb, var(--color-surface-muted) 45%, transparent); }
+
+/* Dark image-led areas intentionally keep inverse text in both themes. */
+.bg-hero-mesh, .landing-hero, .cruise-detail-hero, .login-hero-panel, .register-hero-panel,
+.booking-selection-panel { color: var(--color-text-inverse); }
+
+/* Toasts never change document flow and remain readable in both themes. */
+.toast-viewport {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 200;
+  width: min(380px, calc(100vw - 32px));
+  display: grid;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  color: var(--color-text-primary);
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+  backdrop-filter: blur(16px);
+  animation: toast-in .2s ease-out;
+}
+.toast p { margin: 0; font-size: .86rem; line-height: 1.35; font-weight: 700; }
+.toast-icon {
+  width: 28px; height: 28px; border-radius: 999px;
+  display: grid; place-items: center; font-weight: 900;
+  background: var(--color-accent-soft); color: var(--color-accent);
+}
+.toast-success .toast-icon { background: var(--color-success-soft); color: var(--color-success); }
+.toast-error .toast-icon { background: var(--color-error-soft); color: var(--color-error); }
+.toast-warning .toast-icon { background: var(--color-warning-soft); color: var(--color-warning); }
+.toast-close { border: 0; background: transparent; color: var(--color-text-muted); font-size: 20px; line-height: 1; padding: 4px; }
+.toast-close:hover { color: var(--color-text-primary); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+html[data-theme="light"] .theme-toggle { background: rgba(255,255,255,.96); color: var(--color-accent); border-color: var(--color-border); }
+html[data-theme="dark"] .theme-toggle { background: rgba(30,30,36,.94); color: #e6d4ff; }
+
+/* Existing status components now use semantic state tokens. */
+.status-available, .status-good { color: var(--color-success); background: var(--color-success-soft); border-color: color-mix(in srgb, var(--color-success) 35%, transparent); }
+.status-held, .status-warn { color: var(--color-warning); background: var(--color-warning-soft); border-color: color-mix(in srgb, var(--color-warning) 35%, transparent); }
+.status-booked, .status-bad { color: var(--color-error); background: var(--color-error-soft); border-color: color-mix(in srgb, var(--color-error) 35%, transparent); }
+.status-blocked { color: var(--color-text-muted); background: var(--color-surface-muted); border-color: var(--color-border); }
+
+@media (max-width: 640px) {
+  .theme-toggle { right: 10px; width: 34px; height: 34px; }
+  .toast-viewport { top: 12px; right: 12px; width: min(380px, calc(100vw - 24px)); }
+}

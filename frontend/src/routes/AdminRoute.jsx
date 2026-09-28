@@ -1,0 +1,1 @@
+import {Navigate} from 'react-router-dom';import ProtectedRoute from './ProtectedRoute';import {useAuth} from '../context/AuthContext';export default function AdminRoute({children}){const {user}=useAuth();return <ProtectedRoute>{user?.role==='admin'?children:<Navigate to="/" replace/>}</ProtectedRoute>}
