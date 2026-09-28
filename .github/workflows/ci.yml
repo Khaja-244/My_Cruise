@@ -36,7 +36,7 @@ jobs:
         run: |
           cd backend
           alembic upgrade head
-          python seeds/seed.py
+          python -m seeds.seed
           pytest tests -q
       - name: Prepare cross-channel concurrency fixture
         env:
